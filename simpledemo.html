@@ -8,16 +8,37 @@
 	<link href='http://fonts.googleapis.com/css?family=Luckiest+Guy' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="css/normalize.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">	
+	<style type="text/css">
+		#fuga{
+			overflow: hidden;
+			margin: 0 auto;
+			width: 400px;
+			height: 400px;
+			border: 10px dashed red;
+			position: fixed;
+			background: #fff;
+			position: fixed!important;
+		}
+
+		#fuga img{
+			position: absolute;
+			top: 100px;
+		}
+
+		#dana{
+			left: -200px;
+		}
+		#gion{
+			left: -350px;
+		}
+	</style>
 </head>
 <body class="simple-demo">
 	<div id="content-wrapper">
 
-		<div id="examples-1">
-			<h2 id="fade-it">Fade It</h2>
-			<h2 id="fly-it">Fly It</h2>
-			<h2 id="spin-it">Spin It</h2>
-			<h2 id="scale-it">Scale It</h2>
-			<h2 id="smush-it">Smush It</h2>
+		<div id="fuga">
+			<img src="dana.jpg" id="dana" />
+			<img src="gion.jpg" id="gion" />
 		</div>
 
 	</div>
@@ -27,13 +48,67 @@
   	<script src="js/jquery.superscrollorama.js"></script>
 	<script>
 		$(document).ready(function() {
-			var controller = $.superscrollorama();
+
+
+			controller = $.superscrollorama();
+
+
+/*
 			// individual element tween examples
-			controller.addTween('#fade-it', TweenMax.from( $('#fade-it'), .5, {css:{opacity: 0}}));
-			controller.addTween('#fly-it', TweenMax.from( $('#fly-it'), .25, {css:{right:'1000px'}, ease:Quad.easeInOut}));
-			controller.addTween('#spin-it', TweenMax.from( $('#spin-it'), .25, {css:{opacity:0, rotation: 720}, ease:Quad.easeOut}));
+			controller.addTween('#fade-it', TweenMax.from( $('#fade-it'), .5, {css:{
+				opacity: 0
+			}}));
+
+			controller.addTween('#fly-it', TweenMax.from( $('#fly-it'), .25, {css:{
+				right:'1000px'
+			}, ease:Quad.easeInOut}));
+			
+			controller.addTween('#spin-it', TweenMax.from( $('#spin-it'), .25, {css:{
+				opacity:0, 
+				rotation: 720
+			}, ease:Quad.easeOut}));
+
 			controller.addTween('#scale-it', TweenMax.fromTo( $('#scale-it'), .25, {css:{opacity:0, fontSize:'20px'}, immediateRender:true, ease:Quad.easeInOut}, {css:{opacity:1, fontSize:'240px'}, ease:Quad.easeInOut}));
 			controller.addTween('#smush-it', TweenMax.fromTo( $('#smush-it'), .25, {css:{opacity:0, 'letter-spacing':'30px'}, immediateRender:true, ease:Quad.easeInOut}, {css:{opacity:1, 'letter-spacing':'-10px'}, ease:Quad.easeInOut}), 0, 100); // 100 px offset for better timing
+		
+*/
+
+			// set duration, in pixels scrolled, for pinned element
+			var pinDur = 400;
+			// create animation timeline for pinned element
+			var pinAnimations = new TimelineLite();
+
+			pinAnimations
+				.append(TweenMax.to($('#dana'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#gion'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#dana'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#gion'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#dana'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#gion'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#dana'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#gion'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#dana'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#gion'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#dana'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#gion'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#dana'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#gion'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#dana'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+				.append(TweenMax.to($('#gion'), .2, {css:{left:'+=100px'}, ease: Quad.easeInOut}))
+			
+			// pin element, use onPin and onUnpin to adjust the height of the element
+			controller
+				.pin($('#fuga'), pinDur, {
+					anim:pinAnimations, 
+					onPin: function() {
+						console.log('onPin', arguments);
+					}, 
+					onUnpin: function() {
+						console.log('onUnPin', arguments);
+					}
+				})
+			//	.addTween('#fuga', TweenMax.fromTo( $('#fuga'), .25, {css:{opacity:0}, immediateRender:true, ease:Quad.easeInOut}));
+
 		});
 	</script>
 
